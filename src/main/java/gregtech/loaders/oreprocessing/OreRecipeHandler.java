@@ -69,7 +69,6 @@ public class OreRecipeHandler {
         ItemStack crushedStack = OreDictUnifier.get(OrePrefix.crushed, material);
         ItemStack ingotStack;
         DustMaterial smeltingMaterial = material.directSmelting == null ? material : material.directSmelting;
-        double amountOfCrushedOre = material.oreMultiplier / getPercentOfComponentInMaterial(material, smeltingMaterial);
         if(smeltingMaterial instanceof IngotMaterial) {
             ingotStack = OreDictUnifier.get(OrePrefix.ingot, smeltingMaterial);
         } else if(smeltingMaterial instanceof GemMaterial) {
@@ -83,13 +82,13 @@ public class OreRecipeHandler {
         if (!crushedStack.isEmpty()) {
             RecipeMaps.FORGE_HAMMER_RECIPES.recipeBuilder()
                 .input(orePrefix, material)
-                .outputs(GTUtility.copyAmount((int) Math.ceil(amountOfCrushedOre), crushedStack))
+                .outputs(GTUtility.copyAmount(1, crushedStack))
                 .duration(40).EUt(6)
                 .buildAndRegister();
 
             RecipeBuilder<?> builder = RecipeMaps.MACERATOR_RECIPES.recipeBuilder()
                 .input(orePrefix, material)
-                .outputs(GTUtility.copyAmount((int) Math.round(amountOfCrushedOre * 2), crushedStack))
+                .outputs(GTUtility.copyAmount(2, crushedStack))
                 .chancedOutput(byproductStack, 1400)
                 .duration(200).EUt(12);
             for(MaterialStack secondaryMaterial : orePrefix.secondaryMaterials) {
