@@ -92,6 +92,18 @@ public class BlockOre extends BlockFalling implements IBlockOre {
     }
 
     @Override
+    public void setHarvestLevel(String tool, int level) {
+        material.harvestLevel = level;
+        super.setHarvestLevel(tool, level);
+    }
+
+    @Override
+    public void setHarvestLevel(String tool, int level, IBlockState blockState) {
+        material.harvestLevel = level;
+        super.setHarvestLevel(tool, level, blockState);
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public IBlockState getStateFromMeta(int meta) {
         return getDefaultState().withProperty(STONE_TYPE, STONE_TYPE.getAllowedValues().get(meta));
