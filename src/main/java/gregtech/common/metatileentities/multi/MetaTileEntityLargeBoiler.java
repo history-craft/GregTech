@@ -22,6 +22,7 @@ import gregtech.api.render.ICubeRenderer;
 import gregtech.api.render.SimpleCubeRenderer;
 import gregtech.api.render.Textures;
 import gregtech.api.util.GTUtility;
+import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockBoilerCasing.BoilerCasingType;
 import gregtech.common.blocks.BlockFireboxCasing;
 import gregtech.common.blocks.BlockFireboxCasing.FireboxCasingType;
@@ -188,10 +189,12 @@ public class MetaTileEntityLargeBoiler extends MultiblockWithDisplayBase {
         }
 
         if(currentTemperature >= 100) {
-            boolean doWaterDrain = getTimer() % 20 == 0;
-            FluidStack drainedWater = fluidImportInventory.drain(ModHandler.getWater(1), doWaterDrain);
+            double outputMultiplier = currentTemperature / (boilerType.maxTemperature * 1.0);
+            int fillAmount = (int) (boilerType.baseSteamOutput * outputMultiplier);
+
+            FluidStack drainedWater = fluidImportInventory.drain(ModHandler.getWater((int)Math.floor(fillAmount/ ConfigHolder.waterToSteamRate)), true);
             if(drainedWater == null || drainedWater.amount == 0) {
-                drainedWater = fluidImportInventory.drain(ModHandler.getDistilledWater(1), doWaterDrain);
+                drainedWater = fluidImportInventory.drain(ModHandler.getDistilledWater((int)Math.floor(fillAmount/ ConfigHolder.waterToSteamRate)), true);
             }
             if(drainedWater != null && drainedWater.amount > 0) {
                 if(currentTemperature > 100 && hasNoWater) {
@@ -202,8 +205,7 @@ public class MetaTileEntityLargeBoiler extends MultiblockWithDisplayBase {
                 }
                 this.hasNoWater = false;
                 if(currentTemperature >= 100) {
-                    double outputMultiplier = currentTemperature / (boilerType.maxTemperature * 1.0);
-                    FluidStack steamStack = ModHandler.getSteam((int) (boilerType.baseSteamOutput * outputMultiplier));
+                    FluidStack steamStack = ModHandler.getSteam(fillAmount);
                     steamOutputTank.fill(steamStack, true);
                 }
             } else {

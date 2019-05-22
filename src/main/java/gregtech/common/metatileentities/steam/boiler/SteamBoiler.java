@@ -17,6 +17,7 @@ import gregtech.api.render.SimpleSidedCubeRenderer;
 import gregtech.api.render.SimpleSidedCubeRenderer.RenderSide;
 import gregtech.api.render.Textures;
 import gregtech.api.util.GTUtility;
+import gregtech.common.ConfigHolder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -199,7 +200,7 @@ public abstract class SteamBoiler extends MetaTileEntity {
     private void generateSteam() {
         if (currentTemperature >= 100 && getTimer() % getBoilingCycleLength() == 0) {
             int fillAmount = (int) (baseSteamOutput * (currentTemperature / (getMaxTemperate() * 1.0)));
-            boolean hasDrainedWater = waterFluidTank.drain(1, true) != null;
+            boolean hasDrainedWater = waterFluidTank.drain((int)Math.floor(fillAmount/ConfigHolder.waterToSteamRate), true) != null;
             int filledSteam = 0;
             if (hasDrainedWater) {
                 filledSteam = steamFluidTank.fill(ModHandler.getSteam(fillAmount), true);

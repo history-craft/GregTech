@@ -5,6 +5,7 @@ import gregtech.api.damagesources.DamageSources;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.common.ConfigHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,10 +31,10 @@ public class SteamRecipeMapWorkableHandler extends RecipeMapWorkableHandler {
     private boolean ventingStuck;
     private EnumFacing ventingSide;
 
-    public SteamRecipeMapWorkableHandler(MetaTileEntity tileEntity, RecipeMap<?> recipeMap, boolean isHighPressure, IFluidTank steamFluidTank, double conversionRate) {
+    public SteamRecipeMapWorkableHandler(MetaTileEntity tileEntity, RecipeMap<?> recipeMap, boolean isHighPressure, IFluidTank steamFluidTank) {
         super(tileEntity, recipeMap);
         this.steamFluidTank = steamFluidTank;
-        this.conversionRate = conversionRate;
+        this.conversionRate = ConfigHolder.steamConversionRate;
         this.isHighPressure = isHighPressure;
     }
 
@@ -186,7 +187,10 @@ public class SteamRecipeMapWorkableHandler extends RecipeMapWorkableHandler {
 
     @Override
     protected long getMaxVoltage() {
-        return GTValues.V[GTValues.LV];
+        if (isHighPressure){
+            return 16L;
+        }
+        return GTValues.V[GTValues.ULV];
     }
 
     @Override

@@ -19,7 +19,7 @@ public class SteamMacerator extends SteamMetaTileEntity {
     public SteamMacerator(ResourceLocation metaTileEntityId, boolean isHighPressure) {
         super(metaTileEntityId, RecipeMaps.MACERATOR_RECIPES, Textures.MACERATOR_OVERLAY, isHighPressure);
         this.workableHandler = new SteamRecipeMapWorkableHandler(this,
-            workableHandler.recipeMap, isHighPressure, steamFluidTank, 1.0);
+            workableHandler.recipeMap, isHighPressure, steamFluidTank);
     }
 
     @Override

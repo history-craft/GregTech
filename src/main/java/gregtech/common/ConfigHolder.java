@@ -30,6 +30,12 @@ public class ConfigHolder {
     @Config.Comment("Energy use multiplier for electric items. Default: 100")
     public static int energyUsageMultiplier = 100;
 
+    @Config.Comment("Steam conversion rate, Energy units per millibucket. Default: 1.0F")
+    public static double steamConversionRate = 1.0f;
+
+    @Config.Comment("Quantity of steam generated with 1mb of water. Default: 10")
+    public static double waterToSteamRate = 10;
+
     @Config.RangeInt(min = 0, max = 100)
     @Config.Comment("Chance with which flint and steel will create fire. Default: 50")
     public static int flintChanceToCreateFire = 50;

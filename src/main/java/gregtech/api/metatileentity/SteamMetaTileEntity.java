@@ -42,7 +42,7 @@ public abstract class SteamMetaTileEntity extends MetaTileEntity {
     public SteamMetaTileEntity(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, OrientedOverlayRenderer renderer, boolean isHighPressure) {
         super(metaTileEntityId);
         this.workableHandler = new SteamRecipeMapWorkableHandler(this,
-            recipeMap, isHighPressure, steamFluidTank, 1.0);
+            recipeMap, isHighPressure, steamFluidTank);
         this.isHighPressure = isHighPressure;
         this.renderer = renderer;
         BRONZE_BACKGROUND_TEXTURE = getFullGuiTexture("%s_gui");
