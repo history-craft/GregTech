@@ -81,27 +81,27 @@ public class BlockOre extends BlockFalling implements IBlockOre {
         return stoneType.harvestTool;
     }
 
-    @Override
-    public int getHarvestLevel(IBlockState state) {
-        StoneType stoneType = state.getValue(STONE_TYPE);
-        if (material instanceof DustMaterial) {
-            int toolQuality = ((DustMaterial) material).harvestLevel;
-            return Math.max(stoneType.stoneMaterial.harvestLevel, toolQuality > 1 ? toolQuality - 1 : toolQuality);
-        }
-        return 1;
-    }
-
-    @Override
-    public void setHarvestLevel(String tool, int level) {
-        material.harvestLevel = level;
-        super.setHarvestLevel(tool, level);
-    }
-
-    @Override
-    public void setHarvestLevel(String tool, int level, IBlockState blockState) {
-        material.harvestLevel = level;
-        super.setHarvestLevel(tool, level, blockState);
-    }
+//    @Override
+//    public int getHarvestLevel(IBlockState state) {
+//        StoneType stoneType = state.getValue(STONE_TYPE);
+//        if (material instanceof DustMaterial) {
+//            int toolQuality = ((DustMaterial) material).harvestLevel;
+//            return Math.max(stoneType.stoneMaterial.harvestLevel, toolQuality > 1 ? toolQuality - 1 : toolQuality);
+//        }
+//        return 1;
+//    }
+//
+//    @Override
+//    public void setHarvestLevel(String tool, int level) {
+//        material.harvestLevel = level;
+//        super.setHarvestLevel(tool, level);
+//    }
+//
+//    @Override
+//    public void setHarvestLevel(String tool, int level, IBlockState blockState) {
+//        material.harvestLevel = level;
+//        super.setHarvestLevel(tool, level, blockState);
+//    }
 
     @Override
     @SuppressWarnings("deprecation")
