@@ -59,7 +59,6 @@ public abstract class SteamBoiler extends MetaTileEntity {
     private int fuelBurnTimeLeft;
     private int fuelMaxBurnTime;
     private int currentTemperature;
-    private boolean hasNoWater;
     private int timeBeforeCoolingDown;
 
     private boolean isBurning;
@@ -105,7 +104,6 @@ public abstract class SteamBoiler extends MetaTileEntity {
         data.setInteger("FuelBurnTimeLeft", fuelBurnTimeLeft);
         data.setInteger("FuelMaxBurnTime", fuelMaxBurnTime);
         data.setInteger("CurrentTemperature", currentTemperature);
-        data.setBoolean("HasNoWater", hasNoWater);
         data.setTag("ContainerInventory", containerInventory.serializeNBT());
         return data;
     }
@@ -116,7 +114,6 @@ public abstract class SteamBoiler extends MetaTileEntity {
         this.fuelBurnTimeLeft = data.getInteger("FuelBurnTimeLeft");
         this.fuelMaxBurnTime = data.getInteger("FuelMaxBurnTime");
         this.currentTemperature = data.getInteger("CurrentTemperature");
-        this.hasNoWater = data.getBoolean("HasNoWater");
         this.containerInventory.deserializeNBT(data.getCompoundTag("ContainerInventory"));
         this.isBurning = fuelBurnTimeLeft > 0;
     }
@@ -205,12 +202,6 @@ public abstract class SteamBoiler extends MetaTileEntity {
             if (hasDrainedWater) {
                 filledSteam = steamFluidTank.fill(ModHandler.getSteam(fillAmount), true);
             }
-            if (this.hasNoWater && hasDrainedWater) {
-                getWorld().setBlockToAir(getPos());
-                getWorld().createExplosion(null,
-                    getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5,
-                    2.0f, true);
-            } else this.hasNoWater = !hasDrainedWater;
             if (filledSteam == 0 && hasDrainedWater) {
                 getWorld().playSound(null, getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5,
                     SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1.0f, 1.0f);
