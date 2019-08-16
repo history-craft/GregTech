@@ -7,6 +7,7 @@ import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.RecipeBuilder;
+import gregtech.api.recipes.builders.IntCircuitRecipeBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -114,6 +115,14 @@ public class CTRecipeBuilder {
             throw new IllegalArgumentException("Property " +
                 key + " cannot be applied to recipe type " +
                 backingBuilder.getClass().getSimpleName());
+        }
+        return this;
+    }
+
+    @ZenMethod
+    public CTRecipeBuilder circuitMeta(int circuitMeta) {
+        if (backingBuilder instanceof IntCircuitRecipeBuilder) {
+            ((IntCircuitRecipeBuilder) backingBuilder).circuitMeta(circuitMeta);
         }
         return this;
     }
