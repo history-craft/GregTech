@@ -1,6 +1,8 @@
 package gregtech.api.unification.material.type;
 
 import com.google.common.collect.ImmutableList;
+import gregtech.api.unification.material.properties.FluidCellProperties;
+import gregtech.api.unification.material.properties.FuelRodProperties;
 import gregtech.common.pipelike.cable.WireProperties;
 import gregtech.api.unification.Element;
 import gregtech.api.unification.material.MaterialIconSet;
@@ -78,6 +80,13 @@ public class IngotMaterial extends SolidMaterial {
      */
     @Nullable
     public FluidPipeProperties fluidPipeProperties;
+
+
+    @Nullable
+    public FluidCellProperties cellProperties;
+
+    @Nullable
+    public FuelRodProperties fuelRodProperties;
 
     public IngotMaterial(int metaItemSubId, String name, int materialRGB, MaterialIconSet materialIconSet, int harvestLevel, ImmutableList<MaterialStack> materialComponents, long materialGenerationFlags, Element element, float toolSpeed, float attackDamage, int toolDurability, int blastFurnaceTemperature) {
         super(metaItemSubId, name, materialRGB, materialIconSet, harvestLevel, materialComponents, materialGenerationFlags, element, toolSpeed, attackDamage, toolDurability);
@@ -163,4 +172,23 @@ public class IngotMaterial extends SolidMaterial {
         this.fluidPipeProperties = new FluidPipeProperties(maxTemperature, throughput, gasProof);
     }
 
+    @ZenMethod
+    public void setFluidCellProperties(int maxCapacity, int minFluidTemperature, int maxFluidTemperature) {
+        this.cellProperties = new FluidCellProperties(maxCapacity,minFluidTemperature,maxFluidTemperature);
+    }
+
+    @ZenMethod
+    public void removeFluidCellProperties() {
+        this.cellProperties = null;
+    }
+
+    @ZenMethod
+    public void setFuelRodProperties(int fuelEfficiency, int maxDurability, float heatPerTick, boolean consumable) {
+        this.fuelRodProperties = new FuelRodProperties(fuelEfficiency,maxDurability,heatPerTick,consumable);
+    }
+
+    @ZenMethod
+    public void removeFuelRodProperties() {
+        this.fuelRodProperties = null;
+    }
 }
